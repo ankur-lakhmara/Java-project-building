@@ -26,9 +26,10 @@ public class Main {
             System.out.println("Enter author");
             String author = sc.next();
 //            System.out.println("Enter availability (true/false)");
-            boolean availability = true;// not getting from user because if someone entering book details the its default true
+//            enum status ='AVAILABLE';
+            Book.BookStatus status = Book.BookStatus.AVAILABLE;
             try{
-                boolean success = bookService.addBook(id, title, author, availability);
+                boolean success = bookService.addBook(id, title, author,status);
                 if(success){
                     System.out.println("Book added successfully");
                 }else{

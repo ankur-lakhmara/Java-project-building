@@ -3,6 +3,7 @@ package org.dec30.libraryManagement.Services;
 import org.dec30.libraryManagement.Exceptions.BookNotAvailableException;
 import org.dec30.libraryManagement.Exceptions.BookNotFoundException;
 import org.dec30.libraryManagement.Exceptions.MemberNotExistException;
+import org.dec30.libraryManagement.Model.Book;
 import org.dec30.libraryManagement.Model.Loan;
 
 import java.time.LocalDate;
@@ -29,7 +30,7 @@ public class LoanService {
             throw new MemberNotExistException(memberId);
         }
         loanList.add(new Loan(bookId, memberId, issuedAt));
-        bookService.updateBookAvailability(bookId, false);
+        bookService.updateBookAvailability(bookId, Book.BookStatus.ISSUED);
         return true;
     }
 

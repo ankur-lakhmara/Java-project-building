@@ -5,12 +5,28 @@ public class Book {
     private String title;
     private String author;
     private boolean isAvialable;
+    private BookStatus status;
+    public enum BookStatus{
+        AVAILABLE,
+        ISSUED,
+        RESERVED,
+        LOST
+    }
 
-    public Book(int id, String title, String author, boolean isAvialable) {
+    public BookStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(BookStatus status) {
+        this.status = status;
+    }
+
+    public Book(int id, String title, String author, BookStatus status) {
         this.id = id;
         this.title = title;
         this.author = author;
-        this.isAvialable = isAvialable;
+//        this.isAvialable = isAvialable;
+        this.status = status;
     }
 
     public int getId() {
@@ -32,7 +48,7 @@ public class Book {
         this.author = author;
     }
     public boolean isAvialable() {
-        return isAvialable;
+        return BookStatus.AVAILABLE.equals(status);
     }
     public void setAvialable(boolean isAvialable) {
         this.isAvialable = isAvialable;

@@ -6,21 +6,21 @@ import java.util.ArrayList;
 
 public class BookService {
     ArrayList<Book> books = new ArrayList<Book>();
-    public boolean addBook(int id, String title,String author,boolean isAvailable){
+    public boolean addBook(int id, String title, String author, Book.BookStatus status){
         for(Book book:books){
             if(book.getId() == id || book.getTitle().equals(title)){
                 return false;
             }
         }
-        Book book = new Book(id,title,author,isAvailable);
+        Book book = new Book(id,title,author,status);
         books.add(book);
         return true;
     }
 
-    public boolean updateBookAvailability(int id, boolean isAvailable) {
+    public boolean updateBookAvailability(int id, Book.BookStatus status) {
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).getId() == id) {
-                books.get(i).setAvialable(isAvailable);
+                books.get(i).setStatus(status);
                 return true;
             }
         }
