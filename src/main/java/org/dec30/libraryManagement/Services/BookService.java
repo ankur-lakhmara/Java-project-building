@@ -1,5 +1,6 @@
 package org.dec30.libraryManagement.Services;
 
+import org.dec30.libraryManagement.Exceptions.BookNotFoundException;
 import org.dec30.libraryManagement.Model.Book;
 
 import java.util.ArrayList;
@@ -17,15 +18,14 @@ public class BookService {
         return true;
     }
 
-    public boolean updateBookAvailability(int id, Book.BookStatus status) {
-        for (int i = 0; i < books.size(); i++) {
-            if (books.get(i).getId() == id) {
-                books.get(i).setStatus(status);
-                return true;
-            }
+    public boolean updateBookStatus(int id, Book.BookStatus status) {
+        Book book = getBookById(id);
+        if(book == null){
+            throw new BookNotFoundException(id);
         }
-        return false;
-    }
+        book.setStatus(status);
+        return true;
+    };
 
     public boolean isBookExist(int id){
         for(int i = 0;i<books.size();i++){
@@ -39,7 +39,7 @@ public class BookService {
     public boolean isBookAvailable(int id){
         for(int i = 0;i<books.size();i++){
             if(books.get(i).getId() == id){
-                return books.get(i).isAvialable();
+                return books.get(i).getStatus() == Book.BookStatus.AVAILABLE;
             }
         }
         return false;

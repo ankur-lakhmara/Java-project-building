@@ -1,24 +1,43 @@
 package org.dec30.libraryManagement.Model;
 
+import org.dec30.libraryManagement.Exceptions.BookNotAvailableException;
+
 public class Book {
     private int id;
     private String title;
     private String author;
     private boolean isAvialable;
     private BookStatus status;
-    public enum BookStatus{
+    public enum BookStatus {
         AVAILABLE,
         ISSUED,
         RESERVED,
-        LOST
+        LOST;
+
+        public boolean canTransitionTo(BookStatus status) {
+            switch (this) {
+                case AVAILABLE:
+                    return status == ISSUED;
+                case ISSUED:
+                    return status == AVAILABLE || status == LOST;
+                case LOST:
+                    return false;
+                default:
+                    return false;
+            }
+        }
     }
+
 
     public BookStatus getStatus() {
         return status;
     }
 
-    public void setStatus(BookStatus status) {
-        this.status = status;
+    public void setStatus(BookStatus newStatus) {
+        if(!this.status.canTransitionTo(newStatus)){
+            throw new IllegalStateException("Illegal state transition "+this.status+ " -> "+newStatus);
+        }
+        this.status = newStatus;
     }
 
     public Book(int id, String title, String author, BookStatus status) {
@@ -48,15 +67,13 @@ public class Book {
         this.author = author;
     }
     public boolean isAvialable() {
-        return BookStatus.AVAILABLE.equals(status);
+        return status == BookStatus.AVAILABLE;
     }
-    public void setAvialable(boolean isAvialable) {
-        this.isAvialable = isAvialable;
-    }
+
 
     @Override
     public String toString(){
-        return "Book: { id=" + id + ", title=" + title + ", author=" + author + "isAvailable="+ isAvialable + "}";
+        return "Book: { id=" + id + ", title=" + title + ", author=" + author + "status="+ status + "}";
     }
 
 }

@@ -20,17 +20,18 @@ public class LoanService {
     ArrayList<Loan> loanList = new ArrayList<Loan>();
 
     public boolean issueBook(int bookId, int memberId, LocalDate issuedAt){
-        if(!bookService.isBookExist(bookId)){
+        Book book = bookService.getBookById(bookId);
+        if(book == null){
             throw new BookNotFoundException(bookId);
-        }
-        if(!bookService.isBookAvailable(bookId)){
-            throw new BookNotAvailableException(bookId);
         }
         if(!memberService.isMemberExist(memberId)){
             throw new MemberNotExistException(memberId);
         }
+        if(book.getStatus() != Book.BookStatus.AVAILABLE){
+            throw new  BookNotAvailableException(bookId);
+        }
         loanList.add(new Loan(bookId, memberId, issuedAt));
-        bookService.updateBookAvailability(bookId, Book.BookStatus.ISSUED);
+        bookService.updateBookStatus(bookId, Book.BookStatus.ISSUED);
         return true;
     }
 
