@@ -15,7 +15,5 @@ public class InputTaking {
         }catch(Exception e){
             System.out.println("Error");
         }
-
-
     }
 }
