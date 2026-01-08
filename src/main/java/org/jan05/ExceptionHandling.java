@@ -9,13 +9,15 @@ public class ExceptionHandling {
         int b = sc.nextInt();
         try{
             int c = a/b;
-            System.out.println(c);
         }catch(ArithmeticException e){
             System.out.println("Error Arithmetic");
         }
         catch(Exception e){
             System.out.println("Something went wrong");
         }
+//        finally{
+//            System.out.println("Bye");
+//        }
         finally{
             System.out.println("Bye");
         }
