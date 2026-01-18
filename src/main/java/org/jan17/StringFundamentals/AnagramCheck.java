@@ -37,7 +37,5 @@ public class AnagramCheck {
             }
         }
         System.out.println("anagram");
-
-
     }
 }
